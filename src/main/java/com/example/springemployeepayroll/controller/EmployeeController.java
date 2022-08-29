@@ -19,7 +19,6 @@ public class EmployeeController {
         Extending GreetingController to use Services Layer to get Simple Greeting message
          */
 
-
         @GetMapping("/service")
         public String serviceCall() {
             return service.welcomeMessage();
