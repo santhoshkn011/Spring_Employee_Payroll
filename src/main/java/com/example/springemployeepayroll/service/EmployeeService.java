@@ -31,10 +31,10 @@ public class EmployeeService {
         return repository.findAll();
     }
 
-    public EmployeeEntity editData(EmployeeEntity empData, Long id) {
+    public EmployeeEntity editData(EmpDto empData, Long id) {
         EmployeeEntity existingGreet = repository.findById(id).orElse(null);
         if (existingGreet != null) {
-            existingGreet.setEmployeeId(empData.getEmployeeId());
+//            existingGreet.setEmployeeId(empData.getEmployeeId());
             existingGreet.setEmployeeName(empData.getEmployeeName());
             existingGreet.setProfilePic(empData.getProfilePic());
             existingGreet.setGender(empData.getGender());

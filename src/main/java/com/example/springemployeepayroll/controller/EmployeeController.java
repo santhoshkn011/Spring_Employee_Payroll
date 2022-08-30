@@ -5,6 +5,8 @@ import com.example.springemployeepayroll.dto.ResponseDto;
 import com.example.springemployeepayroll.model.EmployeeEntity;
 import com.example.springemployeepayroll.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,35 +30,72 @@ public class EmployeeController {
         public String serviceCall() {
                 return service.welcomeMessage();
         }
+//        //Insert Employee Data
+//        @PostMapping("/post")
+//        public EmployeeEntity addEmpData(@RequestBody EmployeeEntity empData) {
+//                EmployeeEntity response = service.saveData(empData);
+//                return response;
+//        }
+//        //Get by ID
+//        @GetMapping("/id/{id}")
+//        public Optional<EmployeeEntity> getById(@PathVariable Long id){
+//                return service.findById(id);
+//        }
+//
+//        //get all the data
+//        @GetMapping("/all")
+//        public List<EmployeeEntity> findAllData() {
+//                return service.findAllData();
+//        }
+//        //Edit or Update the data by id
+//        @PutMapping("/edit/{id}")
+//        public EmployeeEntity editData(@RequestBody EmployeeEntity empData, @PathVariable long id) {
+//                return service.editData(empData, id);
+//        }
+//
+//        //Delete the data by id
+//        @DeleteMapping("/delete/{id}")
+//        public String deleteData(@PathVariable Long id) {
+//                service.deleteData(id);
+//                return "Employee Data deleted";
+//        }
+
         //Insert Employee Data
         @PostMapping("/post")
-        public ResponseDto addEmpData(@RequestBody EmpDto empData) {
-              EmployeeEntity response = service.saveData(empData);
-              ResponseDto dtoResponse = new ResponseDto("Data Added Successfully", response);
-                return dtoResponse;
+        public ResponseEntity<ResponseDto> addEmpData(@RequestBody EmpDto empData) {
+                EmployeeEntity response = service.saveData(empData);
+                ResponseDto dtoResponse = new ResponseDto("Data Added Successfully", Optional.ofNullable(response));
+                return new ResponseEntity(dtoResponse, HttpStatus.CREATED);
         }
-
         //Get by ID
         @GetMapping("/id/{id}")
-        public Optional<EmployeeEntity> getById(@PathVariable Long id){
-                return service.findById(id);
+        public ResponseEntity<ResponseDto> getEmpData(@PathVariable Long id) {
+                Optional<EmployeeEntity> empData= null;
+                empData = service.findById(id);
+                ResponseDto respDTO= new ResponseDto("Employee details by ID", empData);
+                return new ResponseEntity(respDTO, HttpStatus.OK);
         }
-
         //get all the data
         @GetMapping("/all")
-        public List<EmployeeEntity> findAllData() {
-                return service.findAllData();
+        public ResponseEntity<ResponseDto> findAllData() {
+                List<EmployeeEntity> empDatalist = null;
+                empDatalist = service.findAllData();
+                ResponseDto respDTO = new ResponseDto("All Employee Data", empDatalist);
+                return new ResponseEntity(respDTO, HttpStatus.OK);
         }
         //Edit or Update the data by id
         @PutMapping("/edit/{id}")
-        public EmployeeEntity editData(@RequestBody EmployeeEntity empData, @PathVariable long id) {
-                return service.editData(empData, id);
+        public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id, @RequestBody EmpDto empDto) {
+                Optional<EmployeeEntity> empData = null;
+                empData = Optional.ofNullable(service.editData(empDto, id));
+                ResponseDto respDTO= new ResponseDto("Data Updated Successfully", empData);
+                return new ResponseEntity (respDTO, HttpStatus.OK);
         }
-
         //Delete the data by id
         @DeleteMapping("/delete/{id}")
-        public String deleteData(@PathVariable Long id) {
+        public ResponseEntity <ResponseDto> deleteEmpData(@PathVariable Long id) {
                 service.deleteData(id);
-                return "Employee Data deleted";
+                ResponseDto respDTO= new ResponseDto("Deleted Successfully", "Deleted id: " + id);
+                return new ResponseEntity(respDTO, HttpStatus.OK);
         }
 }

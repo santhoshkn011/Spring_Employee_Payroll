@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
@@ -20,9 +19,9 @@ public class EmployeeEntity {
     String employeeName;
     String profilePic;
     String gender;
-    Long salary;
+    int salary;
     String department;
-    Date startDate;
+    LocalDate startDate;
     String notes;
 
     public EmployeeEntity(EmpDto empData) {
