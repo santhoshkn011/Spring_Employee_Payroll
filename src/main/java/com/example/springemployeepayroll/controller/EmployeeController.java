@@ -16,7 +16,7 @@ public class EmployeeController {
 
         @RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)
         public String greet() {
-            return "Hello, Welcome to Employee Payroll App";
+                return "Hello, Welcome to Employee Payroll App";
         }
         /*
         Extending GreetingController to use Services Layer to get Simple Greeting message
@@ -24,18 +24,18 @@ public class EmployeeController {
 
         @GetMapping("/service")
         public String serviceCall() {
-            return service.welcomeMessage();
+                return service.welcomeMessage();
         }
-//Insert Employee Data
+        //Insert Employee Data
         @PostMapping("/post")
         public EmployeeEntity addEmpData(@RequestBody EmployeeEntity empData) {
-                service.saveData(empData);
-                return empData;
+              EmployeeEntity response = service.saveData(empData);
+                return response;
         }
 
         //Get by ID
         @GetMapping("/id/{id}")
-        public Optional<EmployeeEntity> greetById(@PathVariable Long id){
+        public Optional<EmployeeEntity> getById(@PathVariable Long id){
                 return service.findById(id);
         }
 
@@ -46,13 +46,13 @@ public class EmployeeController {
         }
         //Edit or Update the data by id
         @PutMapping("/edit/{id}")
-        public EmployeeEntity editGreeting(@RequestBody EmployeeEntity empData, @PathVariable long id) {
+        public EmployeeEntity editData(@RequestBody EmployeeEntity empData, @PathVariable long id) {
                 return service.editData(empData, id);
         }
 
         //Delete the data by id
         @DeleteMapping("/delete/{id}")
-        public String deleteGreeting(@PathVariable Long id) {
+        public String deleteData(@PathVariable Long id) {
                 service.deleteData(id);
                 return "Employee Data deleted";
         }

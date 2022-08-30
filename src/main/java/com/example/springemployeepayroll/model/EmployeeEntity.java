@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,10 +16,10 @@ public class EmployeeEntity {
     String gender;
     Long salary;
     String department;
-    Date startDate;
+    LocalDate startDate;
     String notes;
 
-    public EmployeeEntity(Long employeeId, String employeeName, String profilePic, String gender, Long salary, String department, Date startDate, String notes) {
+    public EmployeeEntity(Long employeeId, String employeeName, String profilePic, String gender, Long salary, String department, LocalDate startDate, String notes) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.profilePic = profilePic;
@@ -81,11 +82,11 @@ public class EmployeeEntity {
         this.department = department;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
