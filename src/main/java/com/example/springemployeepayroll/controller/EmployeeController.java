@@ -1,5 +1,7 @@
 package com.example.springemployeepayroll.controller;
 
+import com.example.springemployeepayroll.dto.EmpDto;
+import com.example.springemployeepayroll.dto.ResponseDto;
 import com.example.springemployeepayroll.model.EmployeeEntity;
 import com.example.springemployeepayroll.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,10 @@ public class EmployeeController {
         }
         //Insert Employee Data
         @PostMapping("/post")
-        public EmployeeEntity addEmpData(@RequestBody EmployeeEntity empData) {
+        public ResponseDto addEmpData(@RequestBody EmpDto empData) {
               EmployeeEntity response = service.saveData(empData);
-                return response;
+              ResponseDto dtoResponse = new ResponseDto("Data Added Successfully", response);
+                return dtoResponse;
         }
 
         //Get by ID

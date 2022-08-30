@@ -1,5 +1,6 @@
 package com.example.springemployeepayroll.service;
 
+import com.example.springemployeepayroll.dto.EmpDto;
 import com.example.springemployeepayroll.model.EmployeeEntity;
 import com.example.springemployeepayroll.repo.Repo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,10 @@ public class EmployeeService {
         return "This is Employee Payroll App";
     }
 
-    public EmployeeEntity saveData(EmployeeEntity empData) {
-        repository.save(empData);
-        return empData;
+    public EmployeeEntity saveData(EmpDto empData) {
+        EmployeeEntity newEmpData = new EmployeeEntity(empData);
+        repository.save(newEmpData);
+        return newEmpData;
     }
 
     public Optional<EmployeeEntity> findById(Long id) {
