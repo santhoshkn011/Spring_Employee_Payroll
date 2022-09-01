@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +34,7 @@ public class EmployeeController {
 //        //Insert Employee Data
 //        @PostMapping("/post")
 //        public EmployeeEntity addEmpData(@RequestBody EmployeeEntity empData) {
-//                EmployeeEntity response = service.saveData(empData);
-//                return response;
+//                return service.saveData(empData);
 //        }
 //        //Get by ID
 //        @GetMapping("/id/{id}")
@@ -62,7 +62,7 @@ public class EmployeeController {
 
         //Insert Employee Data
         @PostMapping("/post")
-        public ResponseEntity<ResponseDto> addEmpData(@RequestBody EmpDto empData) {
+        public ResponseEntity<ResponseDto> addEmpData(@Valid @RequestBody EmpDto empData) {
                 EmployeeEntity response = service.saveData(empData);
                 ResponseDto dtoResponse = new ResponseDto("Data Added Successfully", Optional.ofNullable(response));
                 return new ResponseEntity(dtoResponse, HttpStatus.CREATED);
@@ -85,11 +85,11 @@ public class EmployeeController {
         }
         //Edit or Update the data by id
         @PutMapping("/edit/{id}")
-        public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id, @RequestBody EmpDto empDto) {
+        public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id,@Valid @RequestBody EmpDto empDto) {
                 Optional<EmployeeEntity> empData = null;
                 empData = Optional.ofNullable(service.editData(empDto, id));
                 ResponseDto respDTO= new ResponseDto("Data Updated Successfully", empData);
-                return new ResponseEntity (respDTO, HttpStatus.OK);
+                return new ResponseEntity(respDTO, HttpStatus.OK);
         }
         //Delete the data by id
         @DeleteMapping("/delete/{id}")
