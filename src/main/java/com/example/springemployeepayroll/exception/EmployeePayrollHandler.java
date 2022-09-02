@@ -32,12 +32,12 @@ public class EmployeePayrollHandler {
         return new ResponseEntity(resDTO, HttpStatus.BAD_REQUEST);
     }
     //For Invalid Date Format error
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public ResponseEntity<ResponseDto> handleHttpMessageNotReadableException(
-//            HttpMessageNotReadableException exception) {
-//        log.error("Invalid Date Format", exception);
-//        ResponseDto resDTO = new ResponseDto("Exception while processing REST Request",
-//                "Date Should be in the Format of 'dd MM yyyy'");
-//        return new ResponseEntity(resDTO, HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseDto> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException exception) {
+        log.error("Invalid Date Format", exception);
+        ResponseDto resDTO = new ResponseDto("Exception while processing REST Request",
+                "Date Should be in the Format of 'dd MM yyyy'");
+        return new ResponseEntity(resDTO, HttpStatus.BAD_REQUEST);
+    }
 }

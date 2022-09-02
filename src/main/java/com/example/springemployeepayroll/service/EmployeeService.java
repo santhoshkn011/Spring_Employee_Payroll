@@ -53,4 +53,9 @@ public class EmployeeService implements IEmployeeService {
     public void deleteData(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<EmployeeEntity> getEmployeesByDepartment(String department) {
+        return repository.findEmployeesByDepartment(department);
+    }
 }

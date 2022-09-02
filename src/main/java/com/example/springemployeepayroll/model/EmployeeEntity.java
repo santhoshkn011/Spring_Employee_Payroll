@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "employee_payroll")
+@Table(name = "employee_data")
 public  class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +27,7 @@ public  class EmployeeEntity {
     LocalDate startDate;
     String notes;
     @ElementCollection
-    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "employeeId"))
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "Department")
     List<String> department;
 

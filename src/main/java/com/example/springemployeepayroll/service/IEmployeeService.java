@@ -13,4 +13,5 @@ public interface IEmployeeService {
     Optional<EmployeeEntity> findById(Long id);
     EmployeeEntity editData(EmpDto empData, Long id);
     void deleteData(Long id);
+    List<EmployeeEntity> getEmployeesByDepartment(String department);
 }
