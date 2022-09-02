@@ -3,7 +3,7 @@ package com.example.springemployeepayroll.controller;
 import com.example.springemployeepayroll.dto.EmpDto;
 import com.example.springemployeepayroll.dto.ResponseDto;
 import com.example.springemployeepayroll.model.EmployeeEntity;
-import com.example.springemployeepayroll.service.EmployeeService;
+import com.example.springemployeepayroll.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/emp")
 public class EmployeeController {
         @Autowired
-        EmployeeService service;
+        IEmployeeService service;
 
         @RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)
         public String greet() {
@@ -70,25 +70,22 @@ public class EmployeeController {
         //Get by ID
         @GetMapping("/id/{id}")
         public ResponseEntity<ResponseDto> getEmpData(@PathVariable Long id) {
-                Optional<EmployeeEntity> empData= null;
-                empData = service.findById(id);
+                Optional<EmployeeEntity> empData= service.findById(id);
                 ResponseDto respDTO= new ResponseDto("Employee details by ID", empData);
                 return new ResponseEntity(respDTO, HttpStatus.OK);
         }
         //get all the data
         @GetMapping("/all")
         public ResponseEntity<ResponseDto> findAllData() {
-                List<EmployeeEntity> empDatalist = null;
-                empDatalist = service.findAllData();
+                List<EmployeeEntity> empDatalist = service.findAllData();
                 ResponseDto respDTO = new ResponseDto("All Employee Data", empDatalist);
                 return new ResponseEntity(respDTO, HttpStatus.OK);
         }
         //Edit or Update the data by id
         @PutMapping("/edit/{id}")
         public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id,@Valid @RequestBody EmpDto empDto) {
-                Optional<EmployeeEntity> empData = null;
-                empData = Optional.ofNullable(service.editData(empDto, id));
-                ResponseDto respDTO= new ResponseDto("Data Updated Successfully", empData);
+                Optional<EmployeeEntity> empData = Optional.ofNullable(service.editData(empDto, id));
+                ResponseDto respDTO= new ResponseDto("Data Update info", empData);
                 return new ResponseEntity(respDTO, HttpStatus.OK);
         }
         //Delete the data by id

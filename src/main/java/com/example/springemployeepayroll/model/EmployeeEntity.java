@@ -1,28 +1,35 @@
 package com.example.springemployeepayroll.model;
 
 import com.example.springemployeepayroll.dto.EmpDto;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
-public class EmployeeEntity {
+@Table(name = "employee_payroll")
+public  class EmployeeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Employee_ID")
     Long employeeId;
+    @Column(name = "Name")
     String employeeName;
     String profilePic;
     String gender;
     int salary;
-    String department;
     LocalDate startDate;
     String notes;
+    @ElementCollection
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "employeeId"))
+    @Column(name = "Department")
+    List<String> department;
 
     public EmployeeEntity(EmpDto empData) {
         this.employeeName = empData.getEmployeeName();
