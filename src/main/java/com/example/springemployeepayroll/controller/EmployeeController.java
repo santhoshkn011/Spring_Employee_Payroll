@@ -1,6 +1,6 @@
 package com.example.springemployeepayroll.controller;
 
-import com.example.springemployeepayroll.dto.EmpDto;
+import com.example.springemployeepayroll.dto.EmployeeDto;
 import com.example.springemployeepayroll.dto.ResponseDto;
 import com.example.springemployeepayroll.model.EmployeeEntity;
 import com.example.springemployeepayroll.service.IEmployeeService;
@@ -21,7 +21,7 @@ public class EmployeeController {
 
         @RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)
         public String greet() {
-                return "Hello, Welcome to Employee Payroll App";
+                return "Hello! This is Home Page";
         }
         /*
         Extending GreetingController to use Services Layer to get Simple Greeting message
@@ -62,7 +62,7 @@ public class EmployeeController {
 
         //Insert Employee Data
         @PostMapping("/post")
-        public ResponseEntity<ResponseDto> addEmpData(@Valid @RequestBody EmpDto empData) {
+        public ResponseEntity<ResponseDto> addEmpData(@Valid @RequestBody EmployeeDto empData) {
                 EmployeeEntity response = service.saveData(empData);
                 ResponseDto dtoResponse = new ResponseDto("Data Added Successfully", Optional.ofNullable(response));
                 return new ResponseEntity<>(dtoResponse, HttpStatus.CREATED);
@@ -83,8 +83,8 @@ public class EmployeeController {
         }
         //Edit or Update the data by id
         @PutMapping("/edit/{id}")
-        public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id,@Valid @RequestBody EmpDto empDto) {
-                Optional<EmployeeEntity> empData = Optional.ofNullable(service.editData(empDto, id));
+        public ResponseEntity<ResponseDto> updateEmpData(@PathVariable Long id,@Valid @RequestBody EmployeeDto employeeDto) {
+                Optional<EmployeeEntity> empData = Optional.ofNullable(service.editData(employeeDto, id));
                 ResponseDto respDTO= new ResponseDto("Data Update info", empData);
                 return new ResponseEntity<>(respDTO, HttpStatus.OK);
         }

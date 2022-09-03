@@ -1,10 +1,8 @@
 package com.example.springemployeepayroll.model;
 
-import com.example.springemployeepayroll.dto.EmpDto;
-import lombok.AllArgsConstructor;
+import com.example.springemployeepayroll.dto.EmployeeDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,7 +29,7 @@ public  class EmployeeEntity {
     @Column(name = "Department")
     List<String> department;
 
-    public EmployeeEntity(EmpDto empData) {
+    public EmployeeEntity(EmployeeDto empData) {
         this.employeeName = empData.getEmployeeName();
         this.profilePic = empData.getProfilePic();
         this.gender = empData.getGender();

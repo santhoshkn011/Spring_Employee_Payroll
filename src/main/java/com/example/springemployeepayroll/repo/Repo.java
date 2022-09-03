@@ -14,5 +14,8 @@ public interface Repo extends JpaRepository<EmployeeEntity, Long> {
 }
 
 /*
-SELECT * FROM employee_data, employee_department WHERE employee_data.employee_id = employeeId AND department = "HR";
+@Query
+Annotation for Native Queries.
+
+In order to define SQL to execute for a Spring Data repository method, we can annotate the method with the @Query annotation
  */

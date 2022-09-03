@@ -1,12 +1,12 @@
 package com.example.springemployeepayroll.service;
 
-import com.example.springemployeepayroll.dto.EmpDto;
+import com.example.springemployeepayroll.dto.EmployeeDto;
+import com.example.springemployeepayroll.exception.EmployeePayrollException;
 import com.example.springemployeepayroll.model.EmployeeEntity;
 import com.example.springemployeepayroll.repo.Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +19,18 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public EmployeeEntity saveData(EmpDto empData) {
+    public EmployeeEntity saveData(EmployeeDto empData) {
         EmployeeEntity newEmpData = new EmployeeEntity(empData);
         return repository.save(newEmpData);
     }
 
     @Override
     public Optional<EmployeeEntity> findById(Long id) {
-        return repository.findById(id);
+        Optional<EmployeeEntity> getEmployee = repository.findById(id);
+        if(getEmployee.isPresent()){
+            return repository.findById(id);
+        }else
+            throw new EmployeePayrollException("Error: Cannot find the Employee ID " + id);
     }
     @Override
     public List<EmployeeEntity> findAllData() {
@@ -34,7 +38,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public EmployeeEntity editData(EmpDto empData, Long id) {
+    public EmployeeEntity editData(EmployeeDto empData, Long id) {
         EmployeeEntity existingData = repository.findById(id).orElse(null);
         if (existingData != null) {
             existingData.setEmployeeName(empData.getEmployeeName());
@@ -47,11 +51,15 @@ public class EmployeeService implements IEmployeeService {
             return repository.save(existingData);
         }
         else
-            return null;
+            throw new EmployeePayrollException("Error: Cannot find the Employee Id " + id);
     }
     @Override
     public void deleteData(Long id) {
-        repository.deleteById(id);
+        Optional<EmployeeEntity> getEmployee = repository.findById(id);
+        if(getEmployee.isPresent()) {
+            repository.deleteById(id);
+        } else
+            throw new EmployeePayrollException("Error: Cannot find the Employee ID " + id);
     }
 
     @Override

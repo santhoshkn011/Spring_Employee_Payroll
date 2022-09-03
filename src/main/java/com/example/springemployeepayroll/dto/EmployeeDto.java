@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public @ToString class EmpDto {
+public @ToString class EmployeeDto {
     @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message="Invalid Name(First Letter Should be in Upper Case and min 3 Characters.)")
     String employeeName;
     String profilePic;
